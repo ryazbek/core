@@ -108,6 +108,7 @@ devmgmt.msc
 systeminfo | Out-File -FilePath C:\Temp\Core\systeminfo.txt
 Get-ComputerInfo | Out-File -FilePath C:\Temp\Core\Get-ComputerInfo.txt
 & "C:\Program Files\7-Zip\7zFM.exe"
+& "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe"
 
 Start-Process ms-windows-store:
 explorer ms-windows-store:
