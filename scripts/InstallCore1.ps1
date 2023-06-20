@@ -78,13 +78,68 @@ powershell.exe -File C:\Temp\Core\Scripts\EnableRDP.ps1
 Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolatey.ps1
 
+Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
+powershell.exe -File C:\Temp\Core\Scripts\InstallChocolateyApps.ps1
+
 Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallM365.ps1
 
+Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstallMSTeams.ps1
+
+explorer shell:AppsFolder
+appwiz.cpl
+devmgmt.msc
+systeminfo | Out-File -FilePath C:\Temp\Core\systeminfo.txt
+Get-ComputerInfo | Out-File -FilePath C:\Temp\Core\Get-ComputerInfo.txt
+& "C:\Program Files\7-Zip\7zFM.exe"
+
+Start-Process ms-windows-store:
+explorer ms-windows-store:
+
 Stop-Transcript
 
-Write-Progress -Activity 'Installing 2nd CoreApps Script, please wait...' -PercentComplete (100/10 * 9)
-#powershell.exe -File C:\Temp\Core\Scripts\InstallCore2.ps1
-cd C:\Temp\Core\Scripts\
-& "$PSScriptRoot.\\InstallCore2.ps1"
+function Analyze( $p, $f) {
 
+  Get-ItemProperty $p |ForEach-Object {
+  
+  if (($_.DisplayName) -or ($_.version)) {
+  
+  [PSCustomObject]@{
+  
+  From = $f;
+  
+  Name = $_.DisplayName;
+  
+  Version = $_.DisplayVersion;
+  
+  Install = $_.InstallDate
+  
+  }
+  
+  }
+  
+  }
+  
+  }
+  
+  $s = @()
+  
+  $s += Analyze 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*' 64
+  
+  $s += Analyze 'HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' 32
+  
+  $s | Sort-Object -Property Name |Export-Csv C:\Temp\InstalledPrograms_$(Get-Content env:computername).csv
+
+
+Get-Content "C:\Temp\Core\InstallCoreErrors1.txt" | Out-GridView -PassThru -Title "LOG"
+Get-Content "C:\Temp\Core\InstallCoreErrors2.txt" | Out-GridView -PassThru -Title "LOG"
+
+dism /online /enable-feature /featurename:netfx3 /all
+dism /online /enable-feature /featurename:WCF-HTTP-Activation /all
+dism /online /enable-feature /featurename:WCF-NonHTTP-Activation /all
+
+appwiz.cpl
+
+Write-Progress -Activity 'Checking Windows Update' -PercentComplete (100/10 * 10)
+powershell.exe -File C:\Temp\Core\Scripts\CheckAndInstallWU.ps1
