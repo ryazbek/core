@@ -45,6 +45,9 @@ powershell.exe -File C:\Temp\Core\Scripts\InstallAVESET.ps1
 Write-Progress -Activity 'Installing AnyDesk' -PercentComplete (100/10 * 2)
 powershell.exe -File C:\Temp\Core\Scripts\InstallAnyDesk.ps1
 
+Write-Progress -Activity 'Installing IPMon' -PercentComplete (100/10 * 2)
+powershell.exe -File C:\Temp\Core\Scripts\InstallIPMon.ps1
+
 Write-Progress -Activity 'ADD REG Values' -PercentComplete (100/10 * 4)
 powershell.exe -File C:\Temp\Core\Scripts\ADDREGValues.ps1
 
@@ -78,11 +81,20 @@ powershell.exe -File C:\Temp\Core\Scripts\EnableRDP.ps1
 Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolatey.ps1
 
-Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
+Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+refreshenv
+
+Write-Progress -Activity 'Installing Chocolatey Apps' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolateyApps.ps1
 
 Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallM365.ps1
+
+Write-Progress -Activity 'Installing Install Support Assist Dell' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistDell.ps1
+
+Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistIntel.ps1
 
 Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallMSTeams.ps1
@@ -133,7 +145,6 @@ function Analyze( $p, $f) {
 
 
 Get-Content "C:\Temp\Core\InstallCoreErrors1.txt" | Out-GridView -PassThru -Title "LOG"
-Get-Content "C:\Temp\Core\InstallCoreErrors2.txt" | Out-GridView -PassThru -Title "LOG"
 
 dism /online /enable-feature /featurename:netfx3 /all
 dism /online /enable-feature /featurename:WCF-HTTP-Activation /all
