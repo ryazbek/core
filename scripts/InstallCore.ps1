@@ -1,4 +1,5 @@
-﻿Start-Transcript -Path "C:\Temp\Core\InstallCoreErrors1.txt" -IncludeInvocationHeader
+Measure-Command {
+Start-Transcript -Path "C:\Temp\Core\InstallCoreErrors.txt" -IncludeInvocationHeader
 powershell.exe -Command "& {Set-ExecutionPolicy -scope Currentuser -executionPolicy Unrestricted}"
 
 function Check-Admin {
@@ -63,8 +64,8 @@ powershell.exe -File C:\Temp\Core\Scripts\DisableBackgroundApplications.ps1
 Write-Progress -Activity 'Disabling AntiSpyware' -PercentComplete (100/10 * 6)
 powershell.exe -File C:\Temp\Core\Scripts\DisableAntiSpyware.ps1
 
-Write-Progress -Activity 'Removing W11 Built-In Apps... please wait...' -PercentComplete (100/10 * 6)
-powershell.exe -File C:\Temp\Core\Scripts\RemoveW11BuiltInApps.ps1
+Write-Progress -Activity 'Removing Windows Built-In Apps... please wait...' -PercentComplete (100/10 * 6)
+powershell.exe -File C:\Temp\Core\Scripts\RemoveWBuiltInApps.ps1
 
 Write-Progress -Activity 'Enabling PSRemoting' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\EnablePSRemoting.ps1
@@ -96,8 +97,8 @@ powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistDell.ps1
 Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistIntel.ps1
 
-Write-Progress -Activity 'Getting Installed Programs' -PercentComplete (100/10 * 8)
-powershell.exe -File C:\Temp\Core\Scripts\InstalledPrograms.ps1
+Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstallTeamViewer.ps1
 
 #Some features
 dism /online /enable-feature /featurename:netfx3 /all
@@ -107,7 +108,10 @@ dism /online /enable-feature /featurename:WCF-NonHTTP-Activation /all
 Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallMSTeams.ps1
 
-Get-Content "C:\Temp\Core\InstallCoreErrors1.txt" | Out-GridView -PassThru -Title "LOG"
+Write-Progress -Activity 'Getting Installed Programs' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstalledPrograms.ps1
+
+Get-Content "C:\Temp\Core\InstallCoreErrors.txt" | Out-GridView -PassThru -Title "LOG"
 
 explorer shell:AppsFolder
 appwiz.cpl
@@ -121,6 +125,6 @@ Start-Process ms-windows-store:
 explorer ms-windows-store:
 
 Stop-Transcript
-
+}
 Write-Progress -Activity 'Checking Windows Update' -PercentComplete (100/10 * 10)
 powershell.exe -File C:\Temp\Core\Scripts\CheckAndInstallWU.ps1
