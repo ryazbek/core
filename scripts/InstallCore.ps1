@@ -79,10 +79,10 @@ powershell.exe -File C:\Temp\Core\Scripts\EnableRDP.ps1
 Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolatey.ps1
 
-Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+refreshenv
 
 Write-Progress -Activity 'Installing Chocolatey Apps' -PercentComplete (100/10 * 9)
-powershell.exe -File C:\Temp\Core\Scripts\InstallChocolateyApps.ps1
+& "$PSScriptRoot\InstallChocolateyApps.ps1"
 
 Write-Progress -Activity 'Installing Microsoft 365' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallM365.ps1
