@@ -34,9 +34,6 @@ exit
 
 Get-WmiObject -Class Win32_Product | Where-Object {$_.Name -eq "Microsoft Update Health Tools"} | foreach-object -process {$_.Uninstall()}
 
-#Remove OneDrive
-#Get-WmiObject -Class Win32_Product | Where-Object {$_.Name -eq "Microsoft OneDrive"} | foreach-object -process {$_.Uninstall()}
-
 Write-Progress -Activity 'Now configuring your Power Plan' -PercentComplete (100/10 * 1)
 powershell.exe -File C:\Temp\Core\Scripts\PowerCFG.ps1
 
@@ -83,7 +80,6 @@ Write-Progress -Activity 'Installing Chocolatey' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolatey.ps1
 
 Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-refreshenv
 
 Write-Progress -Activity 'Installing Chocolatey Apps' -PercentComplete (100/10 * 9)
 powershell.exe -File C:\Temp\Core\Scripts\InstallChocolateyApps.ps1
