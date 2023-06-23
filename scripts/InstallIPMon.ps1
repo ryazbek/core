@@ -1,5 +1,6 @@
+Set-ExecutionPolicy Unrestricted -Force
 Write-Progress -Activity 'Getting IPMon' -PercentComplete (100/10 * 1)
 New-Item -Type Directory -Path "C:\Temp\Core\Programs\Tools\IPMon\" -Force
-[system.Diagnostics.Process]::Start("chrome.exe","https://softjem.com.br/gtfl/AgtInstall.exe")
-Move-Item "$env:userprofile\Downloads\AgtInstall.exe" "C:\Temp\Core\Programs\Tools\IPMon\"
+Invoke-WebRequest 'https://softjem.com.br/gtfl/AgtInstall.exe' -OutFile 'C:\Temp\Core\Programs\Tools\IPMon\AgtInstall.exe'
+Sleep 15
 & "C:\Temp\Core\Programs\Tools\IPMon\AgtInstall.exe"
