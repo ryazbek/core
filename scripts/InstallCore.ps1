@@ -93,9 +93,6 @@ powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistDell.ps1
 Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
 powershell.exe -File C:\Temp\Core\Scripts\InstallSupportAssistIntel.ps1
 
-Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
-powershell.exe -File C:\Temp\Core\Scripts\InstallTeamViewer.ps1
-
 #Some features
 dism /online /enable-feature /featurename:netfx3 /all
 dism /online /enable-feature /featurename:WCF-HTTP-Activation /all
@@ -108,6 +105,9 @@ Write-Progress -Activity 'Getting Installed Programs' -PercentComplete (100/10 *
 powershell.exe -File C:\Temp\Core\Scripts\InstalledPrograms.ps1
 
 Get-Content "C:\Temp\Core\InstallCoreErrors.txt" | Out-GridView -PassThru -Title "LOG"
+
+Write-Progress -Activity 'Installing Install Support Assist Intel' -PercentComplete (100/10 * 8)
+powershell.exe -File C:\Temp\Core\Scripts\InstallTeamViewer.ps1
 
 explorer shell:AppsFolder
 appwiz.cpl
