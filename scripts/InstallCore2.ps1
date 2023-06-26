@@ -6,7 +6,7 @@ try
 
 Stop-Process -ProcessName explorer
 explorer shell:AppsFolder
-appwiz.cpl
+
 devmgmt.msc
 systeminfo | Out-File -FilePath C:\Temp\Core\systeminfo.txt
 Get-ComputerInfo | Out-File -FilePath C:\Temp\Core\Get-ComputerInfo.txt
